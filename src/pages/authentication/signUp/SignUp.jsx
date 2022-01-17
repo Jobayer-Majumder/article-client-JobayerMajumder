@@ -2,11 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import useForm from '../../../hooks/useForm';
 
+const SignUp = () => {
 
-
-
-const Login = () => {
-    const {handleForm, loginData} = useForm();
+    const { handleForm, loginData } = useForm();
 
     const handleLogin = async e => {
         e.preventDefault();
@@ -33,6 +31,7 @@ const Login = () => {
     };
 
 
+
     return (
         <section className="min-h-screen flex flex-col bg-gray-100">
             <div className="flex flex-1 items-center justify-center py-12">
@@ -41,12 +40,15 @@ const Login = () => {
                         <div className="flex flex-col justify-center items-center">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Oikya_Front_Logo.png/480px-Oikya_Front_Logo.png" alt="" className="h-32" />
                             <h1 className="font-bold tracking-wider text-3xl mb-8 w-full text-brand">
-                                Sign in
+                                Sign up
                             </h1>
 
                         </div>
                         <div className="py-2 text-left">
                             <input onChange={e => handleForm(e)} value={loginData?.email} type="email" name='email' className="input-brand" placeholder="Email" required />
+                        </div>
+                        <div className="py-2 text-left">
+                            <input onChange={e => handleForm(e)} value={loginData?.password} type="text" name='user_name' className="input-brand" placeholder="User Name" required />
                         </div>
                         <div className="py-2 text-left">
                             <input onChange={e => handleForm(e)} value={loginData?.password} type="password" name='password' className="input-brand" placeholder="Password" required />
@@ -57,7 +59,7 @@ const Login = () => {
                                     loading ? <SpinLoader /> : null
                                 } */}
                                 {/* <SpinLoader /> */}
-                                Sign In
+                                Create account
                             </button>
                         </div>
                     </form>
@@ -66,9 +68,9 @@ const Login = () => {
                     </div>
                     <div className="text-center mt-12">
                         <span>
-                            Don't have an account?
+                            Have an account?
                         </span> {``}
-                        <Link to={'/signup'} className="text-md text-blue-700 underline font-semibold hover:text-blue-800">Create One</Link>
+                        <Link to={'/login'} className="text-md text-blue-700 underline font-semibold hover:text-blue-800">Sign-in</Link>
                     </div>
                 </div>
             </div>
@@ -76,4 +78,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;

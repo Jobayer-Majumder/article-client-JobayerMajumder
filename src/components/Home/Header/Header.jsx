@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
         <>
             <nav className="flex items-center justify-between bg-teal-500 p-6 border">
                 <div className="flex items-center flex-shrink-0 text-white mr-6">
-                    <span className="font-semibold text-xl tracking-tight">Article Guru</span>
+                    <Link to={'/'} className="font-semibold text-xl tracking-tight">Article Guru</Link>
                 </div>
                 <div className="block lg:hidden">
                     <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
@@ -25,7 +26,7 @@ const Header = () => {
                         </a>
                     </div>
                     <div>
-                        <a href="/" className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white">Download</a>
+                        <Link to={'/login'} className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white">Login</Link>
                     </div>
                 </div>
             </nav>
