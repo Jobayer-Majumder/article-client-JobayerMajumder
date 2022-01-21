@@ -3,22 +3,22 @@ import React from 'react';
 
 
 const useForm = () => {
-    const [loginData, setLoginData] = React.useState();
+    const [formData, setFormData] = React.useState();
 
 
     const handleForm = e => {
         const name = e.target.name;
         const value = e.target.value;
-        const newData = { ...loginData }
+        const newData = { ...formData }
 
         newData[name] = value;
 
-        setLoginData(newData);
+        setFormData(newData);
     }
 
     return {
-        loginData,
-        setLoginData,
+        formData,
+        setFormData,
         handleForm
     };
 };

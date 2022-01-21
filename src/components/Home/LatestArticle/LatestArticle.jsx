@@ -1,16 +1,20 @@
+//external imports
 import React from 'react';
-import ArticleList from '../ArticleList/ArticleList';
+
+//internal imports
 import MostPopular from '../MostPopular/MostPopular';
+import ArticleList from '../ArticleList/ArticleList';
+
+
 
 const LatestArticle = () => {
-    
 
 
     return (
         <section>
             <div className="grid md:grid-cols-8">
                 <div className="col-span-6">
-                    <ArticleList />
+                    <ArticleList/>
                 </div>
                 <div className="col-span-2 hidden md:block" >
                     <MostPopular />

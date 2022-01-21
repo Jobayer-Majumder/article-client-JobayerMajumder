@@ -1,29 +1,55 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { gql, useMutation } from '@apollo/client';
+import useForm from '../../../hooks/useForm';
+import { useNavigate, useParams } from 'react-router-dom';
+import { userContext } from '../../../App';
+import { useAlert } from 'react-alert';
 
 
-const comments = [
-    {
-        name: 'Saybrugh',
-        img: 'https://cdn2.iconfinder.com/data/icons/men-avatars/33/man_8-512.png',
-        date: 'Jan 10, 2022',
-        comment: 'this is first testing comment'
-    },
-    {
-        name: 'Saybrugh',
-        img: 'https://cdn2.iconfinder.com/data/icons/men-avatars/33/man_8-512.png',
-        date: 'Jan 10, 2022',
-        comment: 'this is second testing comment'
-    },
-    {
-        name: 'Saybrugh',
-        img: 'https://cdn2.iconfinder.com/data/icons/men-avatars/33/man_8-512.png',
-        date: 'Jan 10, 2022',
-        comment: 'this is third testing comment'
+const COMMENT_MUTATION = gql`
+  mutation insertComment($userId: String!, $articleId: String!, $comment: String!) {
+    insertComment(input: {userId: $userId, articleId: $articleId, comment: $comment}){
+        successMessage
+        errorMessage
     }
-]
+  }
+`;
 
 
-const CommentSection = () => {
+
+const CommentSection = ({ comments }) => {
+    const [isUserAuthenticated] = useContext(userContext);
+
+    const alert = useAlert()
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const { formData, handleForm, setFormData } = useForm();
+    const [insertComment, { loading }] = useMutation(COMMENT_MUTATION);
+
+
+    const handlePostComment = async () => {
+
+        try {
+            if(isUserAuthenticated?.email){
+                await insertComment({
+                    variables: {
+                        userId: '61e982013512f125abc13bde',
+                        articleId: id,
+                        comment: formData.comment
+                    }
+                });
+                setFormData({ comment: '' })
+            }else{
+                alert.info('You have to login before comment')
+                navigate('/login')
+            }
+
+        } catch (error) {
+            alert.error(error.message)
+        }
+    };
+
+
     return (
         <section>
             <div className="py-8">
@@ -31,23 +57,32 @@ const CommentSection = () => {
                     post a comment
                 </h4>
                 <p className="font-semibold text-teal-500 py-4">
-                    {comments.length > 1 ? `${comments.length} Comments` : '0 Comment'}
+                    {comments.length > 0 ? `${comments.length} Comments` : '0 Comment'}
                 </p>
-                <textarea className='w-full input-brand' name="" id="" cols="30" rows="3" placeholder='Enter your comment...' style={{resize: 'none'}}/>
-
+                <form action="" onSubmit={handlePostComment}>
+                    <textarea className='w-full input-brand' onChange={e => handleForm(e)} name="comment" value={formData?.comment} id="" cols="30" rows="3" placeholder='Enter your comment...' style={{ resize: 'none' }} />
+                    <div className="flex justify-end gap-5 items-center">
+                        {
+                            loading ? <p className='text-teal-500 font-semibold'>Posting...</p> : null
+                        }
+                        <button className="button-brand my-2">
+                            Post
+                        </button>
+                    </div>
+                </form>
                 {
                     comments.map((comment, index) =>
-                        <div key={index} className="flex gap-4 py-3">
+                        <div key={index} className="flex gap-4 py-3 px-3 border rounded-md my-2">
                             <div className="">
-                                <img src={comment.img} className='w-10' alt="" />
+                                <img src='https://cdn2.iconfinder.com/data/icons/men-avatars/33/man_8-512.png' className='w-10' alt="" />
 
                             </div>
                             <div className="">
                                 <h4 className="">
-                                    {comment.name}
+                                    {comment.userId}
                                 </h4>
                                 <p className="text-sm font-semibold text-gray-500">
-                                    {comment.date}
+                                    {new Date(comment.createdAt).toDateString()}
                                 </p>
                                 <p className="">
                                     {comment.comment}

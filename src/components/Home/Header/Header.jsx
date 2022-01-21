@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { userContext } from '../../../App';
+import UserInfo from './UserInfo';
+
+
 
 const Header = () => {
+    const [isUserAuthenticate] = useContext(userContext);
+
     return (
         <>
             <nav className="flex items-center justify-between bg-teal-500 p-6 border">
@@ -26,7 +32,10 @@ const Header = () => {
                         </a>
                     </div>
                     <div>
-                        <Link to={'/login'} className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white">Login</Link>
+                        {
+                           isUserAuthenticate?.email ? <UserInfo user={isUserAuthenticate} /> : 
+                           <Link to={'/login'} className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white">Login</Link>
+                        }
                     </div>
                 </div>
             </nav>

@@ -15,7 +15,6 @@ const MostPopular = () => {
     const stickNavbar = () => {
       if (window !== undefined) {
         let windowHeight = window.scrollY;
-        console.log(windowHeight)
         windowHeight > 600 ? setStickyClass(true) : setStickyClass(false);
       }
     };
@@ -31,7 +30,7 @@ const MostPopular = () => {
                 <div className="py-4">
                     {
                         articleListData.slice(2, 6).map((article, index) =>
-                            <div className="grid grid-cols-3 gap-2 pb-2 group hover:opacity-75 cursor-pointer" >
+                            <div key={index} className="grid grid-cols-3 gap-2 pb-2 group hover:opacity-75 cursor-pointer" >
                                 <div className="overflow-hidden col-span-1 flex justify-center items-center">
                                     <img src={article.img} alt="" className='rounded-md transform transition duration-500 hover:scale-110' />
                                 </div>
