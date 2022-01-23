@@ -16,10 +16,11 @@ const GET_ARTICLES = gql`
             tags
             comments
                 {
-                    userId
+                    userName
                     comment
                     createdAt
                 }
+            authorName
             authorEmail
             updatedAt
             createdAt

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAlert } from 'react-alert';
 import { Link } from 'react-router-dom';
 
 
@@ -6,13 +7,15 @@ import { Link } from 'react-router-dom';
 const UserInfo = ({ user }) => {
     const [isOpenMenu, setIsOpenMenu] = React.useState(false);
 
+    const alert = useAlert();
+
     const handleLogout = async () => {
 
         try {
             await sessionStorage.removeItem('token')
             window.location.reload(false)
         } catch (error) {
-            console.log(error)
+            alert.alerts(error.message)
         }
         
     };
@@ -31,6 +34,9 @@ const UserInfo = ({ user }) => {
 
                         <Link onClick={() => setIsOpenMenu(!isOpenMenu)} to={'/myblogs'} className='text-white uppercase text-sm hover:underline'>
                             My blogs
+                        </Link>
+                        <Link onClick={() => setIsOpenMenu(!isOpenMenu)} to={'/postarticle'} className='text-white uppercase text-sm hover:underline'>
+                            Post article
                         </Link>
                         <button className='button-brand' onClick={handleLogout}>
                             Logout

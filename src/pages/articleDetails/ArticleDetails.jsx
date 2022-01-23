@@ -2,7 +2,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { gql, useQuery } from '@apollo/client';
-// import MostPopular from '../../components/Home/MostPopular/MostPopular';
+
 //internal imports
 import Footer from '../../components/Home/Footer/Footer';
 import CommentSection from '../../components/ArticleDetails/CommentSection/CommentSection';
@@ -19,10 +19,11 @@ const GET_ARTICLE_BY_ID = gql`
             tags
             comments
                 {
-                    userId
+                    userName
                     comment
                     createdAt
                 }
+            authorName
             authorEmail
             updatedAt
             createdAt
@@ -47,7 +48,9 @@ const ArticleDetails = () => {
     }
 
     const { date } = convertStringToDate(data?.findArticle[0]?.createdAt)
-
+    console.log(
+        data?.findArticle
+    )
     return (
         <section>
             <div className="max-w-7xl px-2 sm:px-4 mx-auto py-12">
@@ -61,13 +64,19 @@ const ArticleDetails = () => {
                         </h2>
                         <div className="flex gap-3 items-center py-2">
                             <img className='w-10 rounded-full' src="https://cdn2.iconfinder.com/data/icons/men-avatars/33/man_8-512.png" alt="" />
-                            <p className="">john -
+                            <p className="">
+                                {
+                                    data?.findArticle[0]?.authorName
+                                }
+                            </p>
+                            <p className="text-gray-500 text-sm">
+                                - {''}
                                 {
                                     date
                                 }
                             </p>
                         </div>
-                        <img className='rounded-md w-full' src="http://blogs.ubc.ca/blessiecanete/files/2014/11/happy-apple-store.jpg" alt="" />
+                        <img className='rounded-md w-full' src="https://media.istockphoto.com/photos/professional-blogger-working-on-his-new-post-for-social-media-at-home-picture-id1252684502?b=1&k=20&m=1252684502&s=170667a&w=0&h=3kK22loPkc8S4_iJdVZ4_IpoOeIKI5zVe4LbqzhD9bM=" alt="" />
                         <p className="py-4 text-justify">
                             {
                                 data?.findArticle[0]?.description

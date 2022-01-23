@@ -58,7 +58,6 @@ const SignUp = () => {
         }
     };
 
-    console.log(isUserAuthenticated)
 
     return (
         <section className="min-h-screen flex flex-col bg-gray-100">
