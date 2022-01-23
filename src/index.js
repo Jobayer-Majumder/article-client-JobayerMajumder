@@ -3,33 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {
-  ApolloClient,
-  InMemoryCache,
   ApolloProvider
 } from "@apollo/client";
 import {
-  transitions,
-  positions,
   Provider as AlertProvider
 } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
 import reportWebVitals from './reportWebVitals';
 
+//internal imports
+import { client } from './utils/graphQlEndPoint';
+import { options } from './utils/alertOptions';
 
 
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  uri: 'http://localhost:5000/graphql',
-})
 
-const options = {
-  // you can also just use 'bottom center'
-  position: positions.BOTTOM_CENTER,
-  timeout: 5000,
-  offset: '30px',
-  // you can also just use 'scale'
-  transition: transitions.SCALE
-}
+
+
 
 
 ReactDOM.render(

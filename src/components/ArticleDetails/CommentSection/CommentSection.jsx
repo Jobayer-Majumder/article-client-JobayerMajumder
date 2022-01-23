@@ -7,8 +7,8 @@ import { useAlert } from 'react-alert';
 
 
 const COMMENT_MUTATION = gql`
-  mutation insertComment($userId: String!, $articleId: String!, $comment: String!) {
-    insertComment(input: {userId: $userId, articleId: $articleId, comment: $comment}){
+  mutation insertComment($userName: String!, $articleId: String!, $comment: String!) {
+    insertComment(input: {userName: $userName, articleId: $articleId, comment: $comment}){
         successMessage
         errorMessage
     }
@@ -33,7 +33,7 @@ const CommentSection = ({ comments }) => {
             if(isUserAuthenticated?.email){
                 await insertComment({
                     variables: {
-                        userId: '61e982013512f125abc13bde',
+                        userName: isUserAuthenticated?.name,
                         articleId: id,
                         comment: formData.comment
                     }
@@ -49,6 +49,7 @@ const CommentSection = ({ comments }) => {
         }
     };
 
+    console.log(isUserAuthenticated)
 
     return (
         <section>
@@ -60,7 +61,7 @@ const CommentSection = ({ comments }) => {
                     {comments.length > 0 ? `${comments.length} Comments` : '0 Comment'}
                 </p>
                 <form action="" onSubmit={handlePostComment}>
-                    <textarea className='w-full input-brand' onChange={e => handleForm(e)} name="comment" value={formData?.comment} id="" cols="30" rows="3" placeholder='Enter your comment...' style={{ resize: 'none' }} />
+                    <textarea className='w-full input-brand' onChange={e => handleForm(e)} name="comment" value={formData?.comment} id="" cols="30" rows="3" placeholder='Enter your comment...' style={{ resize: 'none' }} required/>
                     <div className="flex justify-end gap-5 items-center">
                         {
                             loading ? <p className='text-teal-500 font-semibold'>Posting...</p> : null
@@ -79,7 +80,7 @@ const CommentSection = ({ comments }) => {
                             </div>
                             <div className="">
                                 <h4 className="">
-                                    {comment.userId}
+                                    {comment.userName}
                                 </h4>
                                 <p className="text-sm font-semibold text-gray-500">
                                     {new Date(comment.createdAt).toDateString()}

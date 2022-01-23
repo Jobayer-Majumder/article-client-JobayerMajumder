@@ -15,7 +15,7 @@ const GET_ARTICLE_BY_EMAIL = gql`
             tags
             comments
                 {
-                    userId
+                    userName
                     comment
                     createdAt
                 }
